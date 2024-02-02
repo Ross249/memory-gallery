@@ -1,3 +1,3 @@
-export type PhotoViewModalProps = {};
+import { Content } from "./response";
 
-export type PhotoCardProps = {};
+export type PhotoCardProps = Content;

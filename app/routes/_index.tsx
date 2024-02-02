@@ -1,8 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import type { MetaFunction } from "@remix-run/node";
+import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
+import { json, type MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
 import { atom } from "jotai";
+import { Suspense } from "react";
 import PhotoCard from "~/components/PhotoCard";
 import PhotoViewModel from "~/components/PhotoViewModel";
+import { Content } from "~/types/response";
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,9 +20,50 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export const loader = async () => {
+  const s3 = new S3Client({
+    region: "auto",
+    endpoint: `${process.env.ENDPOINTS_S3}`,
+    credentials: {
+      accessKeyId: `${process.env.ACCESS_KEY}`,
+      secretAccessKey: `${process.env.SECRET_ACCESS_KEY}`,
+    },
+  });
+
+  const getListObjects = new ListObjectsV2Command({
+    Bucket: `${process.env.BUCKET_NAME}`,
+    Delimiter: "",
+  });
+
+  try {
+    const data = await s3.send(getListObjects);
+
+    return json(
+      data.Contents?.map((value) => ({
+        Key: `${process.env.CUSTOM_URL}/${value.Key}`,
+        LastModified: value.LastModified,
+        ETag: value.ETag,
+        Size: value.Size,
+        StorageClass: value.StorageClass,
+      }))
+    );
+  } catch (err) {
+    console.log(err);
+    return json([]);
+  }
+};
+
 export const openView = atom<boolean>(false);
+export const selectPhoto = atom<Content>({
+  Key: "",
+  LastModified: new Date(),
+  ETag: "",
+  Size: 0,
+  StorageClass: "",
+});
 
 export default function Index() {
+  const loaderData = useLoaderData<typeof loader>();
   return (
     <div className="p-12 gap-4 m-0 w-full">
       <div className="flex justify-between flex-row ">
@@ -60,14 +105,15 @@ export default function Index() {
           </svg>
         </label>
       </div>
-
-      <div className="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 gap-4 w-full  ">
-        {[0, 1, 2, 3, 4, 5, 6, 7].map((i) => (
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
-          <PhotoCard key={i} />
-        ))}
-      </div>
-      <PhotoViewModel />
+      <Suspense fallback={<div>Loading...</div>}>
+        <div className="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 gap-4 w-full  ">
+          {loaderData.map((value, i) => (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, @typescript-eslint/no-explicit-any
+            <PhotoCard key={i} {...(value as any)} />
+          ))}
+        </div>
+        <PhotoViewModel />
+      </Suspense>
     </div>
   );
 }
