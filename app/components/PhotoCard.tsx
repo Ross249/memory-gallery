@@ -11,7 +11,7 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
   return (
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
     <div
-      className="card rounded-none glass  shadow-xl cursor-pointer hover:scale-105 after: ease-in-out duration-300 "
+      className="card  cursor-pointer  justify-center items-center"
       onClick={() => {
         setSelected({
           Key: props.Key,
@@ -23,14 +23,12 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
         setOpen(true);
       }}
     >
-      <figure>
-        <img
-          className="object-contain "
-          src={`${props.Key}`}
-          alt={`${props.Key}`}
-          loading="lazy"
-        />
-      </figure>
+      <img
+        className="rounded-none glass  shadow-xl hover:scale-105 after: ease-in-out duration-300 object-scale-down"
+        src={`${props.Key}`}
+        alt={`${props.Key}`}
+        loading="lazy"
+      />
       {/* <div className=" card-body p-4">
         <p>detail</p>
       </div> */}

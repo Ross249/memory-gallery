@@ -9,9 +9,9 @@ const PhotoViewModel = () => {
 
   return (
     <dialog id="my_modal_2" className="modal" open={open}>
-      <div className="modal-box p-0  max-w-[64rem]">
+      <div className="modal-box p-0  max-w-[64rem] flex flex-1 justify-center items-center ">
         <img
-          className="object-contain w-full h-full relative "
+          className="object-scale-down relative "
           src={`${selected.Key}`}
           alt=""
           loading="lazy"

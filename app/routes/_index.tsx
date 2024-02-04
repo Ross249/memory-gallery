@@ -33,6 +33,7 @@ export const loader = async () => {
   const getListObjects = new ListObjectsV2Command({
     Bucket: `${process.env.BUCKET_NAME}`,
     Delimiter: "",
+    MaxKeys: 20,
   });
 
   try {
