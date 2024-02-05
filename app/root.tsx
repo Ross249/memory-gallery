@@ -1,4 +1,5 @@
 // import { cssBundleHref } from "@remix-run/css-bundle";
+import { NextUIProvider } from "@nextui-org/system";
 import type { LinksFunction } from "@remix-run/node";
 import {
   Links,
@@ -34,10 +35,12 @@ export default function App() {
             <Links />
           </head>
           <body>
-            <Outlet />
-            <ScrollRestoration />
-            <Scripts />
-            <LiveReload />
+            <NextUIProvider>
+              <Outlet />
+              <ScrollRestoration />
+              <Scripts />
+              <LiveReload />
+            </NextUIProvider>
           </body>
         </html>
       </QueryClientProvider>

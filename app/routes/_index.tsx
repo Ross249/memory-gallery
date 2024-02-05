@@ -2,7 +2,7 @@
 import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
 import { json, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { atom } from "jotai";
+import { atom, useAtom } from "jotai";
 import { Suspense } from "react";
 import PhotoCard from "~/components/PhotoCard";
 import PhotoViewModel from "~/components/PhotoViewModel";
@@ -63,10 +63,13 @@ export const selectPhoto = atom<Content>({
   StorageClass: "",
 });
 
+export const themes = atom<"wireframe" | "black">("wireframe");
+
 export default function Index() {
   const loaderData = useLoaderData<typeof loader>();
+  const [, setTheme] = useAtom(themes);
   return (
-    <div className="p-12 gap-4 m-0 w-full">
+    <div className="p-12 gap-8 m-0 w-full">
       <div className="flex justify-between flex-row ">
         <h1 className="text-3xl w-full mb-12">{`Jim Luo's Memory`}</h1>
         <label className="cursor-pointer grid place-items-center">
@@ -74,6 +77,14 @@ export default function Index() {
             type="checkbox"
             value="black"
             className="toggle theme-controller bg-base-content row-start-1 col-start-1 col-span-2"
+            onChange={(event) => {
+              console.log(event.target.checked);
+              if (event.target.checked) {
+                setTheme("black");
+              } else {
+                setTheme("wireframe");
+              }
+            }}
           />
           <svg
             className="col-start-1 row-start-1 stroke-base-100 fill-base-100"

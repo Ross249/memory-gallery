@@ -1,32 +1,54 @@
 /* eslint-disable react/prop-types */
+import { Modal, ModalContent, ModalBody, ModalFooter } from "@nextui-org/modal";
 import { useAtom } from "jotai";
 import React from "react";
-import { openView, selectPhoto } from "~/routes/_index";
+import { openView, selectPhoto, themes } from "~/routes/_index";
 
 const PhotoViewModel = () => {
   const [open, setOpen] = useAtom(openView);
+  const [theme] = useAtom(themes);
   const [selected] = useAtom(selectPhoto);
 
   return (
-    <dialog id="my_modal_2" className="modal" open={open}>
-      <div className="modal-box p-0  max-w-[64rem] flex flex-1 justify-center items-center ">
-        <img
-          className="object-scale-down relative "
-          src={`${selected.Key}`}
-          alt=""
-          loading="lazy"
-        />
-      </div>
-      <div className="absolute bottom-4 left-4">
-        <p className="text-lg font-bold text-cyan-300">detail</p>
-      </div>
-      <form
-        method="dialog"
-        className="modal-backdrop bg-gradient-to-r from-slate-50 to-neutral-200"
-      >
-        <button onClick={() => setOpen(false)}>close</button>
-      </form>
-    </dialog>
+    <Modal
+      size="full"
+      isOpen={open}
+      onClose={() => {
+        setOpen(false);
+      }}
+      className={`${
+        theme === "wireframe"
+          ? "bg-gradient-to-r from-slate-50 to-neutral-200"
+          : "bg-gradient-to-r  from-slate-700  via-slate-950 to-gray-950 "
+      }`}
+      closeButton={<div className="opacity-0"></div>}
+    >
+      <ModalContent>
+        {(onClose) => (
+          <>
+            <ModalBody
+              onClick={onClose}
+              className="flex justify-center items-center relative "
+            >
+              <div className="w-[90vw]  max-h-[calc(95vh-3em)] bg-transparent flex items-center justify-center relative ">
+                <img
+                  className="object-scale-down relative  bg-transparent  w-auto h-full shadow-2xl"
+                  src={`${selected.Key}`}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </ModalBody>
+            <ModalFooter>
+              <div className="absolute bottom-4 left-4">
+                <p className="text-lg font-bold text-cyan-300">detail</p>
+              </div>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
   );
 };
 
