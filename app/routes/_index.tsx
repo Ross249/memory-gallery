@@ -1,12 +1,14 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { ListObjectsV2Command, S3Client } from "@aws-sdk/client-s3";
 import { json, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+import { useQuery } from "@tanstack/react-query";
 import { atom, useAtom } from "jotai";
 import { Suspense } from "react";
 import PhotoCard from "~/components/PhotoCard";
 import PhotoViewModel from "~/components/PhotoViewModel";
-import { Content } from "~/types/response";
+import { ImagesServices } from "~/services/images.services";
+import { PhotoCardProps } from "~/types/components";
+import { ImageListResponseData, R2Object } from "~/types/response";
 
 export const meta: MetaFunction = () => {
   return [
@@ -21,52 +23,34 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async () => {
-  const s3 = new S3Client({
-    region: "auto",
-    endpoint: `${process.env.ENDPOINTS_S3}`,
-    credentials: {
-      accessKeyId: `${process.env.ACCESS_KEY}`,
-      secretAccessKey: `${process.env.SECRET_ACCESS_KEY}`,
-    },
-  });
-
-  const getListObjects = new ListObjectsV2Command({
-    Bucket: `${process.env.BUCKET_NAME}`,
-    Delimiter: "",
-    MaxKeys: 20,
-  });
-
   try {
-    const data = await s3.send(getListObjects);
-
-    return json(
-      data.Contents?.map((value) => ({
-        Key: `${process.env.CUSTOM_URL}/${value.Key}`,
-        LastModified: value.LastModified,
-        ETag: value.ETag,
-        Size: value.Size,
-        StorageClass: value.StorageClass,
-      }))
-    );
+    const data: PhotoCardProps[] = await ImagesServices.getImages();
+    return json({ data });
   } catch (err) {
-    console.log(err);
     return json([]);
   }
 };
 
 export const openView = atom<boolean>(false);
-export const selectPhoto = atom<Content>({
-  Key: "",
-  LastModified: new Date(),
-  ETag: "",
-  Size: 0,
-  StorageClass: "",
+export const selectPhoto = atom<PhotoCardProps>({
+  key: "asd",
+  etag: "",
+  customMetadata: {},
+  size: 0,
+  uploaded: "",
+  url: "",
 });
 
 export const themes = atom<"wireframe" | "black">("wireframe");
 
 export default function Index() {
-  const loaderData = useLoaderData<typeof loader>();
+  const { data } = useLoaderData<{ data: R2Object }>();
+  const getImages = useQuery<ImageListResponseData>({
+    queryKey: ["image_list"],
+    queryFn: ImagesServices.getImages,
+    initialData: data as any,
+  });
+
   const [, setTheme] = useAtom(themes);
   return (
     <div className="p-12 gap-8 m-0 w-full">
@@ -78,7 +62,6 @@ export default function Index() {
             value="black"
             className="toggle theme-controller bg-base-content row-start-1 col-start-1 col-span-2"
             onChange={(event) => {
-              console.log(event.target.checked);
               if (event.target.checked) {
                 setTheme("black");
               } else {
@@ -119,10 +102,12 @@ export default function Index() {
       </div>
       <Suspense fallback={<div>Loading...</div>}>
         <div className="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 gap-4 w-full  ">
-          {loaderData.map((value, i) => (
-            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, @typescript-eslint/no-explicit-any
-            <PhotoCard key={i} {...(value as any)} />
-          ))}
+          {getImages.isSuccess &&
+            getImages.data.photos.map((value, i) => (
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, @typescript-eslint/no-explicit-any
+
+              <PhotoCard {...value} url={value.key} />
+            ))}
         </div>
         <PhotoViewModel />
       </Suspense>

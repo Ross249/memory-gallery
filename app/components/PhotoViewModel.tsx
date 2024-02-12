@@ -3,6 +3,7 @@ import { Modal, ModalContent, ModalBody, ModalFooter } from "@nextui-org/modal";
 import { useAtom } from "jotai";
 import React from "react";
 import { openView, selectPhoto, themes } from "~/routes/_index";
+import { PhotoCardProps } from "~/types/components";
 
 const PhotoViewModel = () => {
   const [open, setOpen] = useAtom(openView);
@@ -33,7 +34,7 @@ const PhotoViewModel = () => {
               <div className="w-[90vw]  max-h-[calc(95vh-3em)] bg-transparent flex items-center justify-center relative ">
                 <img
                   className="object-scale-down relative  bg-transparent  w-auto h-full shadow-2xl"
-                  src={`${selected.Key}`}
+                  src={`${selected.url}`}
                   alt=""
                   loading="lazy"
                   decoding="async"

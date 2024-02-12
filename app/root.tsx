@@ -18,7 +18,13 @@ export const links: LinksFunction = () => [
   { rel: "icon", href: "/favicon.png" },
 ];
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+    },
+  },
+});
 
 export default function App() {
   return (

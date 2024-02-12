@@ -13,11 +13,7 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
       className="card    justify-center items-center"
       onClick={() => {
         setSelected({
-          Key: props.Key,
-          ETag: props.ETag,
-          LastModified: props.LastModified,
-          Size: props.Size,
-          StorageClass: props.StorageClass,
+          ...props,
         });
         setOpen(true);
 
@@ -26,8 +22,8 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
     >
       <img
         className="rounded-none glass  shadow-xl hover:scale-105 after: ease-in-out duration-300 object-scale-down cursor-pointer"
-        src={`${props.Key}`}
-        alt={`${props.Key}`}
+        src={`${props.url}`}
+        alt={`${props.url}`}
         loading="lazy"
       />
       {/* <div className=" card-body p-4">
@@ -37,4 +33,4 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
   );
 };
 
-export default PhotoCard;
+export default React.memo(PhotoCard);
