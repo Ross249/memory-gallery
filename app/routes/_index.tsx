@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { json, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { useQuery } from "@tanstack/react-query";
 import { atom, useAtom } from "jotai";
 import { Suspense } from "react";
 import PhotoCard from "~/components/PhotoCard";
@@ -24,10 +23,11 @@ export const meta: MetaFunction = () => {
 
 export const loader = async () => {
   try {
-    const data = await ImagesServices.getImages();
+    const data: ImageListResponseData = await ImagesServices.getImages();
+
     return json({ data });
   } catch (err) {
-    return json([]);
+    return json({ data: { success: false, photos: [] } });
   }
 };
 
@@ -44,12 +44,7 @@ export const selectPhoto = atom<PhotoCardProps>({
 export const themes = atom<"wireframe" | "black">("wireframe");
 
 export default function Index() {
-  const { data } = useLoaderData<{ data: R2Object }>();
-  const getImages = useQuery<ImageListResponseData>({
-    queryKey: ["image_list"],
-    queryFn: ImagesServices.getImages,
-    initialData: data as any,
-  });
+  const loaderData = useLoaderData<{ data: ImageListResponseData }>();
 
   const [, setTheme] = useAtom(themes);
   return (
@@ -102,12 +97,10 @@ export default function Index() {
       </div>
       <Suspense fallback={<div>Loading...</div>}>
         <div className="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 gap-4 w-full  ">
-          {getImages.isSuccess &&
-            getImages.data.photos.map((value, i) => (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, @typescript-eslint/no-explicit-any
-
-              <PhotoCard {...value} url={value.key} />
-            ))}
+          {loaderData.data.photos.map((value, i) => (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, @typescript-eslint/no-explicit-any
+            <PhotoCard {...value} url={value.key} />
+          ))}
         </div>
         <PhotoViewModel />
       </Suspense>

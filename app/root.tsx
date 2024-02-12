@@ -9,7 +9,6 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Provider } from "jotai";
 import stylesheet from "~/tailwind.css";
 
@@ -18,38 +17,25 @@ export const links: LinksFunction = () => [
   { rel: "icon", href: "/favicon.png" },
 ];
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60 * 1000,
-    },
-  },
-});
-
 export default function App() {
   return (
-    <Provider>
-      <QueryClientProvider client={queryClient}>
-        <html lang="en">
-          <head>
-            <meta charSet="utf-8" />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1"
-            />
-            <Meta />
-            <Links />
-          </head>
-          <body>
-            <NextUIProvider>
-              <Outlet />
-              <ScrollRestoration />
-              <Scripts />
-              <LiveReload />
-            </NextUIProvider>
-          </body>
-        </html>
-      </QueryClientProvider>
-    </Provider>
+    <html lang="en">
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <Provider>
+          <NextUIProvider>
+            <Outlet />
+            <ScrollRestoration />
+            <Scripts />
+            <LiveReload />
+          </NextUIProvider>
+        </Provider>
+      </body>
+    </html>
   );
 }
