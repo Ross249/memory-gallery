@@ -24,7 +24,7 @@ export const meta: MetaFunction = () => {
 
 export const loader = async () => {
   try {
-    const data: PhotoCardProps[] = await ImagesServices.getImages();
+    const data = await ImagesServices.getImages();
     return json({ data });
   } catch (err) {
     return json([]);
@@ -33,7 +33,7 @@ export const loader = async () => {
 
 export const openView = atom<boolean>(false);
 export const selectPhoto = atom<PhotoCardProps>({
-  key: "asd",
+  key: "",
   etag: "",
   customMetadata: {},
   size: 0,
