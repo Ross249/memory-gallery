@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import PhotoCard from "~/components/PhotoCard";
 import PhotoViewModel from "~/components/PhotoViewModel";
 import { ImagesServices } from "~/services/images.services";
+import { themes } from "~/store";
 import { PhotoCardProps } from "~/types/components";
 import { ImageListResponseData, R2Object } from "~/types/response";
 
@@ -30,18 +31,6 @@ export const loader = async () => {
     return json({ data: { success: false, photos: [] } });
   }
 };
-
-export const openView = atom<boolean>(false);
-export const selectPhoto = atom<PhotoCardProps>({
-  key: "",
-  etag: "",
-  customMetadata: {},
-  size: 0,
-  uploaded: "",
-  url: "",
-});
-
-export const themes = atom<"wireframe" | "black">("wireframe");
 
 export default function Index() {
   const loaderData = useLoaderData<{ data: ImageListResponseData }>();
@@ -95,15 +84,15 @@ export default function Index() {
           </svg>
         </label>
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <div className="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 gap-4 w-full  ">
-          {loaderData.data.photos.map((value, i) => (
+
+      <div className="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 gap-4 w-full  ">
+        {loaderData.data.success &&
+          loaderData.data.photos.map((value, i) => (
             // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, @typescript-eslint/no-explicit-any
             <PhotoCard {...value} url={value.key} />
           ))}
-        </div>
-        <PhotoViewModel />
-      </Suspense>
+      </div>
+      <PhotoViewModel />
     </div>
   );
 }
