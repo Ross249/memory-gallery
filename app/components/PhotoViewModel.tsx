@@ -3,7 +3,6 @@ import { Modal, ModalContent, ModalBody, ModalFooter } from "@nextui-org/modal";
 import { useAtom } from "jotai";
 import React, { Suspense } from "react";
 import { openView, selectPhoto, themes } from "~/store";
-import { PhotoCardProps } from "~/types/components";
 import { ClientOnly } from "remix-utils/client-only";
 const PhotoViewModel = () => {
   const [open, setOpen] = useAtom(openView);
@@ -43,11 +42,33 @@ const PhotoViewModel = () => {
                     />
                   </div>
                 </ModalBody>
-                <ModalFooter>
-                  <div className="absolute bottom-4 left-4">
-                    <p className="text-lg font-bold text-cyan-300">detail</p>
-                  </div>
-                </ModalFooter>
+                {!!selected.customMetadata &&
+                  !!selected.customMetadata.time && (
+                    <ModalFooter>
+                      <div className="absolute bottom-4 left-4">
+                        <p className="text-lg font-bold text-cyan-300">
+                          {selected.customMetadata?.device_name}
+                        </p>
+                        <div className="flex flex-row gap-2">
+                          <p className="text-lg font-bold text-cyan-300">
+                            ISO{selected.customMetadata?.iso}
+                          </p>
+                          <p className="text-lg font-bold text-cyan-300">
+                            F{selected.customMetadata?.f_number}
+                          </p>
+                          <p className="text-lg font-bold text-cyan-300">
+                            {selected.customMetadata?.shutter_speed}
+                          </p>
+                          <p className="text-lg font-bold text-cyan-300">
+                            {selected.customMetadata?.focal_length}
+                          </p>
+                        </div>
+                        <p className="text-lg font-bold text-cyan-300">
+                          {selected.customMetadata?.time.replaceAll(":", "-")}
+                        </p>
+                      </div>
+                    </ModalFooter>
+                  )}
               </>
             )}
           </ModalContent>

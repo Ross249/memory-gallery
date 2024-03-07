@@ -6,7 +6,7 @@ export type ImageListResponseData = {
 };
 
 export type R2Object = {
-  customMetadata?: any;
+  customMetadata?: Metadata;
   uploaded: string;
   checksums?: {
     md5: string;
@@ -16,4 +16,13 @@ export type R2Object = {
   size: number;
   version?: string;
   key: string;
+};
+
+export type Metadata = {
+  device_name?: string;
+  f_number?: string | number;
+  time?: string;
+  iso?: string | number;
+  focal_length?: string | number;
+  shutter_speed?: string | number;
 };
