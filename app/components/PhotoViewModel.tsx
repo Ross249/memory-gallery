@@ -60,7 +60,7 @@ const PhotoViewModel = () => {
                             {selected.customMetadata?.shutter_speed}
                           </p>
                           <p className="text-lg font-bold text-cyan-300">
-                            {selected.customMetadata?.focal_length}
+                            {selected.customMetadata?.focal_length}mm
                           </p>
                         </div>
                         <p className="text-lg font-bold text-cyan-300">
