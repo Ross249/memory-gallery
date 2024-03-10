@@ -1,14 +1,12 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { json, type MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { atom, useAtom } from "jotai";
-import { Suspense } from "react";
+import { useAtom } from "jotai";
 import PhotoCard from "~/components/PhotoCard";
 import PhotoViewModel from "~/components/PhotoViewModel";
 import { ImagesServices } from "~/services/images.services";
 import { themes } from "~/store";
-import { PhotoCardProps } from "~/types/components";
-import { ImageListResponseData, R2Object } from "~/types/response";
+import { ImageListResponseData } from "~/types/response";
 
 export const meta: MetaFunction = () => {
   return [

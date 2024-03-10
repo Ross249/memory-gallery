@@ -22,7 +22,7 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
           }}
         >
           <img
-            className="rounded-none glass  shadow-xl hover:scale-105 after: ease-in-out duration-300 object-scale-down cursor-pointer"
+            className="rounded-none glass  shadow-xl sm:hover:scale-105 sm:after: ease-in-out duration-300 object-scale-down cursor-pointer"
             src={`${props.url}`}
             alt={`${props.url}`}
             loading="lazy"
