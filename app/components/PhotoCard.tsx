@@ -8,7 +8,7 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
   const [, setSelected] = useAtom(selectPhoto);
 
   return (
-    <ClientOnly fallback={<div>Loading...</div>}>
+    <ClientOnly fallback={<div className="skeleton h-80 w-[13rem]"></div>}>
       {() => (
         <div
           className="card    justify-center items-center"

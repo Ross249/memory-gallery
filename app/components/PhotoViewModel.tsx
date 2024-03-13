@@ -10,7 +10,7 @@ const PhotoViewModel = () => {
   const [selected] = useAtom(selectPhoto);
 
   return (
-    <ClientOnly fallback={<div>Loading...</div>}>
+    <ClientOnly fallback={<div></div>}>
       {() => (
         <Modal
           size="full"
