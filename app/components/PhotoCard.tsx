@@ -8,10 +8,10 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
   const [, setSelected] = useAtom(selectPhoto);
 
   return (
-    <ClientOnly fallback={<div className="skeleton h-80 w-[13rem]"></div>}>
+    <ClientOnly fallback={<div className="card skeleton max-w-full"></div>}>
       {() => (
         <div
-          className="card    justify-center items-center"
+          className="card  max-w-full   justify-center items-center"
           onClick={() => {
             setSelected({
               ...props,
