@@ -1,9 +1,15 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { json, type MetaFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { type MetaFunction } from "@remix-run/node";
+import {
+  ClientLoaderFunctionArgs,
+  useLoaderData,
+  Await,
+} from "@remix-run/react";
 import { useAtom } from "jotai";
+import { Suspense } from "react";
 import PhotoCard from "~/components/PhotoCard";
 import PhotoViewModel from "~/components/PhotoViewModel";
+import SkeletonCard from "~/components/SkeletonCard";
 import { ImagesServices } from "~/services/images.services";
 import { themes } from "~/store";
 import { ImageListResponseData } from "~/types/response";
@@ -22,16 +28,22 @@ export const meta: MetaFunction = () => {
 
 export const loader = async () => {
   try {
-    const data: ImageListResponseData = await ImagesServices.getImages();
+    const data = await ImagesServices.getImages();
 
-    return json({ data });
+    return { data };
   } catch (err) {
-    return json({ data: { success: false, photos: [] } });
+    return { data: { success: false, photos: [] } };
   }
 };
 
+export async function clientLoader({ serverLoader }: ClientLoaderFunctionArgs) {
+  return {
+    data: serverLoader<typeof loader>().then((c) => c.data),
+  };
+}
+
 export default function Index() {
-  const loaderData = useLoaderData<{ data: ImageListResponseData }>();
+  const { data } = useLoaderData<{ data: ImageListResponseData }>();
 
   const [, setTheme] = useAtom(themes);
   return (
@@ -39,7 +51,9 @@ export default function Index() {
       <div className="flex justify-between flex-row ">
         <h1 className="text-3xl w-full mb-12">{`Jim Luo's Memory`}</h1>
         <div className="cursor-pointer grid place-items-center">
-          <label htmlFor="theme-toggle" className="sr-only">Toggle theme</label>
+          <label htmlFor="theme-toggle" className="sr-only">
+            Toggle theme
+          </label>
           <input
             id="theme-toggle"
             type="checkbox"
@@ -88,12 +102,12 @@ export default function Index() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 gap-4 w-full  ">
-        {loaderData.data.success &&
-          loaderData.data.photos.map((value, i) => (
-            // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, @typescript-eslint/no-explicit-any
-            <PhotoCard {...value} url={value.key} />
-          ))}
+      <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-4 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+        
+            {
+              data.photos.map((value, index) => (
+                <PhotoCard {...value} url={value.key} key={index.toString()} />
+              ))}
       </div>
       <PhotoViewModel />
     </div>

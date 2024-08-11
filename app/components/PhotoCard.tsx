@@ -1,37 +1,64 @@
 import { useAtom } from "jotai";
-import React, { Suspense } from "react";
+import React from "react";
+import { ClientOnly } from "remix-utils/client-only";
 import { openView, selectPhoto } from "~/store";
 import { PhotoCardProps } from "~/types/components";
-import { ClientOnly } from "remix-utils/client-only";
+import SkeletonCard from "./SkeletonCard";
 const PhotoCard: React.FC<PhotoCardProps> = (props) => {
   const [, setOpen] = useAtom(openView);
   const [, setSelected] = useAtom(selectPhoto);
 
   return (
-    <ClientOnly fallback={<div className="card skeleton max-w-full"></div>}>
-      {() => (
-        <div
-          className="card  max-w-full   justify-center items-center"
-          onClick={() => {
-            setSelected({
-              ...props,
-            });
-            setOpen(true);
-
-            // !isOpen && onOpen();
-          }}
-        >
-          <img
-            className="rounded-none glass  shadow-xl sm:hover:scale-105 sm:after: ease-in-out duration-300 object-scale-down cursor-pointer"
-            src={`${props.url}`}
-            alt={`${props.url}`}
-            loading="lazy"
-          />
-          {/* <div className=" card-body p-4">
-        <p>detail</p>
-      </div> */}
+    <ClientOnly fallback={<SkeletonCard key={props.key} />}>
+      {
+        () => (
+          <div
+      className="w-84 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+      onClick={() => {
+        setSelected({
+          ...props,
+        });
+        setOpen(true);
+      }}
+    >
+      <img
+        className=" w-84 aspect-[4/3] object-cover rounded-t-xl md:rounded-xl"
+        src={`${props.url}`}
+        alt={`${props.url}`}
+        loading="lazy"
+      />
+      <div className="px-4 py-3 w-85 md:hidden bg-white rounded-b-xl">
+        <span className="text-gray-400 mr-3 uppercase text-xs">Date</span>
+        <p className="text-lg font-bold  truncate block capitalize">
+          {props.customMetadata?.time?.replaceAll(":", "-")}
+        </p>
+        <div className="flex items-center">
+          <p className="text-sm  text-gray-600 cursor-auto my-3">
+            {!!props.customMetadata?.iso
+              ? "ISO" + props.customMetadata?.iso
+              : ""}
+          </p>
+          <p className="text-sm text-gray-600 cursor-auto ml-2">
+            {!!props.customMetadata?.focal_length
+              ? props.customMetadata?.focal_length + "mm"
+              : ""}
+          </p>
+          <p className="text-sm text-gray-600 cursor-auto ml-2">
+            {!!props.customMetadata?.f_number
+              ? "f/" + props.customMetadata?.f_number
+              : ""}
+          </p>
+          <p className="text-sm text-gray-600 cursor-auto ml-2">
+            {!!props.customMetadata?.shutter_speed
+              ? props.customMetadata?.shutter_speed
+              : ""}
+          </p>
+          <div className="ml-auto"></div>
         </div>
-      )}
+      </div>
+          </div>
+        )
+      }
     </ClientOnly>
   );
 };

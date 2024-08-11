@@ -20,7 +20,7 @@ specifiers:
   eslint-plugin-jsx-a11y: ^6.7.1
   eslint-plugin-react: ^7.33.2
   eslint-plugin-react-hooks: ^4.6.0
-  framer-motion: ^11.0.3
+  framer-motion: ^11.3.24
   isbot: ^4.1.0
   jotai: ^2.6.3
   react: ^18.2.0

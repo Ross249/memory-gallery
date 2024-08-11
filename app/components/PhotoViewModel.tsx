@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Modal, ModalContent, ModalBody, ModalFooter } from "@nextui-org/modal";
 import { useAtom } from "jotai";
-import React, { Suspense } from "react";
 import { openView, selectPhoto, themes } from "~/store";
 import { ClientOnly } from "remix-utils/client-only";
 const PhotoViewModel = () => {
@@ -36,7 +35,7 @@ const PhotoViewModel = () => {
                     <img
                       className="object-scale-down relative  bg-transparent  w-auto h-full shadow-2xl"
                       src={`${selected.url}`}
-                      alt=""
+                      alt={selected.key}
                       loading="lazy"
                       decoding="async"
                     />

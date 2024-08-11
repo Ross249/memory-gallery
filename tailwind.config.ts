@@ -10,6 +10,9 @@ export default {
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--gradient-color-stops))",
       },
+      aspectRatio: {
+        '4/3': '4 / 3',
+      },
     },
   },
   darkMode: "class",
