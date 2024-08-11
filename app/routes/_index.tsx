@@ -103,11 +103,9 @@ export default function Index() {
       </div>
 
       <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-4 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
-        
-            {
-              data.photos.map((value, index) => (
-                <PhotoCard {...value} url={value.key} key={index.toString()} />
-              ))}
+        {data.photos.map((value, index) => (
+          <PhotoCard {...value} url={value.key} key={index.toString()} />
+        ))}
       </div>
       <PhotoViewModel />
     </div>
