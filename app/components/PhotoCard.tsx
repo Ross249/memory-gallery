@@ -9,11 +9,11 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
   const [, setSelected] = useAtom(selectPhoto);
 
   return (
-    <ClientOnly fallback={<SkeletonCard key={props.key} />}>
+    <ClientOnly fallback={<SkeletonCard />}>
       {() => (
         <div
           className="w-84 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
-          key={props.key}
+          key={props.url}
           onClick={() => {
             setSelected({
               ...props,
@@ -24,7 +24,7 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
           <img
             className=" w-84 h-63 aspect-[4/3] object-cover rounded-t-xl lg:rounded-xl"
             src={`${props.url}`}
-            alt={`${props.key}`}
+            alt={`${props.url}`}
             loading="lazy"
           />
           <div className="px-4 py-3 w-85 lg:hidden bg-white rounded-b-xl">
