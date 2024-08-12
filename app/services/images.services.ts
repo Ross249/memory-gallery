@@ -6,6 +6,7 @@ export const ImagesServices = {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST,GET",
       },
+      cache: "force-cache",
       method: "GET",
     });
 
