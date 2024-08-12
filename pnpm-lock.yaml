@@ -25,7 +25,6 @@ specifiers:
   jotai: ^2.6.3
   react: ^18.2.0
   react-dom: ^18.2.0
-  remix-utils: ^7.5.0
   tailwindcss: ^3.4.1
   typescript: ^5.1.6
 
@@ -42,7 +41,6 @@ dependencies:
   jotai: 2.9.2_3vdbhqr2ncalcx7opnshezpx3q
   react: 18.3.1
   react-dom: 18.3.1_react@18.3.1
-  remix-utils: 7.6.0_do7fxiwodmcvzmuetd46qbrntq
 
 devDependencies:
   '@remix-run/dev': 2.11.1_6rrpddmecouxdg7gxs5rwudacq
@@ -5914,48 +5912,6 @@ packages:
       unified: 10.1.2
     dev: true
 
-  /remix-utils/7.6.0_do7fxiwodmcvzmuetd46qbrntq:
-    resolution: {integrity: sha512-BPhCUEy+nwrhDDDg2v3+LFSszV6tluMbeSkbffj2o4tqZxt5Kn69Y9sNpGxYLAj8gjqeYDuxjv55of+gYnnykA==}
-    engines: {node: '>=18.0.0'}
-    peerDependencies:
-      '@remix-run/cloudflare': ^2.0.0
-      '@remix-run/deno': ^2.0.0
-      '@remix-run/node': ^2.0.0
-      '@remix-run/react': ^2.0.0
-      '@remix-run/router': ^1.7.2
-      crypto-js: ^4.1.1
-      intl-parse-accept-language: ^1.0.0
-      is-ip: ^5.0.1
-      react: ^18.0.0
-      zod: ^3.22.4
-    peerDependenciesMeta:
-      '@remix-run/cloudflare':
-        optional: true
-      '@remix-run/deno':
-        optional: true
-      '@remix-run/node':
-        optional: true
-      '@remix-run/react':
-        optional: true
-      '@remix-run/router':
-        optional: true
-      crypto-js:
-        optional: true
-      intl-parse-accept-language:
-        optional: true
-      is-ip:
-        optional: true
-      react:
-        optional: true
-      zod:
-        optional: true
-    dependencies:
-      '@remix-run/node': 2.11.1_typescript@5.5.4
-      '@remix-run/react': 2.11.1_ufd4wuwl6nsu2rc3oq3j4g52da
-      react: 18.3.1
-      type-fest: 4.24.0
-    dev: false
-
   /require-like/0.1.2:
     resolution: {integrity: sha512-oyrU88skkMtDdauHDuKVrgR+zuItqr6/c//FXzvmxRGMexSDc6hNvJInGW3LL46n+8b50RykrvwSUIIQH2LQ5A==}
     dev: true
@@ -6603,11 +6559,6 @@ packages:
     resolution: {integrity: sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==}
     engines: {node: '>=10'}
     dev: true
-
-  /type-fest/4.24.0:
-    resolution: {integrity: sha512-spAaHzc6qre0TlZQQ2aA/nGMe+2Z/wyGk5Z+Ru2VUfdNwT6kWO6TjevOlpebsATEG1EIQ2sOiDszud3lO5mt/Q==}
-    engines: {node: '>=16'}
-    dev: false
 
   /type-is/1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}

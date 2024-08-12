@@ -1,9 +1,7 @@
 import { useAtom } from "jotai";
 import React from "react";
-import { ClientOnly } from "remix-utils/client-only";
 import { openView, selectPhoto } from "~/store";
 import { PhotoCardProps } from "~/types/components";
-import SkeletonCard from "./SkeletonCard";
 const PhotoCard: React.FC<PhotoCardProps> = (props) => {
   const [, setOpen] = useAtom(openView);
   const [, setSelected] = useAtom(selectPhoto);

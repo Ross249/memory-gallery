@@ -2,7 +2,6 @@
 import { Modal, ModalContent, ModalBody, ModalFooter } from "@nextui-org/modal";
 import { useAtom } from "jotai";
 import { openView, selectPhoto, themes } from "~/store";
-import { ClientOnly } from "remix-utils/client-only";
 const PhotoViewModel = () => {
   const [open, setOpen] = useAtom(openView);
   const [theme] = useAtom(themes);
