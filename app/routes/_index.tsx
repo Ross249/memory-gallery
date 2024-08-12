@@ -7,8 +7,8 @@ import {
 } from "@remix-run/react";
 import { useAtom } from "jotai";
 import { Suspense } from "react";
+import DialogModal from "~/components/DialogModal";
 import PhotoCard from "~/components/PhotoCard";
-import PhotoViewModel from "~/components/PhotoViewModel";
 import SkeletonCard from "~/components/SkeletonCard";
 import { ImagesServices } from "~/services/images.services";
 import { themes } from "~/store";
@@ -117,7 +117,7 @@ export default function Index() {
           </Await>
         </Suspense>
       </div>
-     <PhotoViewModel />
+      <DialogModal />
     </div>
   );
 }

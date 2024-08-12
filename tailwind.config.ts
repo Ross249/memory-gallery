@@ -11,12 +11,13 @@ export default {
         "gradient-radial": "radial-gradient(var(--gradient-color-stops))",
       },
       aspectRatio: {
-        '4/3': '4 / 3',
+        "4/3": "4 / 3",
+        "3/2": "3 / 2",
       },
     },
   },
   darkMode: "class",
-  plugins: [require("daisyui"), require("@nextui-org/theme")],
+  plugins: [require("daisyui")],
   daisyui: {
     themes: ["wireframe", "black"],
   },

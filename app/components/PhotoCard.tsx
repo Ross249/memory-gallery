@@ -1,21 +1,22 @@
 import { useAtom } from "jotai";
 import React from "react";
-import { openView, selectPhoto } from "~/store";
+import { selectPhoto } from "~/store";
 import { PhotoCardProps } from "~/types/components";
 const PhotoCard: React.FC<PhotoCardProps> = (props) => {
-  const [, setOpen] = useAtom(openView);
   const [, setSelected] = useAtom(selectPhoto);
 
   const handleClick = () => {
     setSelected({
       ...props,
     });
-    setOpen(true);
+    document?.getElementById("dislog-modal")?.showModal();
+    // setOpen(true);
   };
 
   return (
     <div
       className="w-84 shadow-md rounded-xl duration-300 sm:hover:scale-105 cursor-pointer "
+      role="button"
       onClick={handleClick}
     >
       <img
@@ -43,7 +44,7 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
           </p>
           <p className="text-sm text-gray-600 cursor-auto ml-2">
             {!!props.customMetadata?.f_number
-              ? "f/" + props.customMetadata?.f_number
+              ? "f/" + Number(props.customMetadata?.f_number).toFixed(1)
               : ""}
           </p>
           <p className="text-sm text-gray-600 cursor-auto ml-2">
