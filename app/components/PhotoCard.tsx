@@ -21,7 +21,9 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
     >
       <img
         // className=" w-84 h-63 aspect-[4/3] object-cover rounded-t-xl lg:rounded-xl duration-300 sm:hover:scale-105 sm:hover:shadow-xl cursor-pointer "
-        className="w-84 h-63 aspect-[4/3] object-cover rounded-t-xl lg:rounded-xl "
+        className="aspect-[4/3] object-cover rounded-t-xl lg:rounded-xl "
+        width={336}
+        height={252}
         src={`${props.url}`}
         alt={`${props.url}`}
         loading="lazy"
