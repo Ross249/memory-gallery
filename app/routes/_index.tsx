@@ -110,8 +110,8 @@ export default function Index() {
         >
           <Await resolve={data}>
             {(data) =>
-              data.photos.map((value, index) => (
-                <PhotoCard {...value} url={value.key} key={index.toString()} />
+              data.photos.map((value) => (
+                <PhotoCard {...value} url={value.key} key={value.key} />
               ))
             }
           </Await>

@@ -9,7 +9,6 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
   return (
     <div
       className="w-84 shadow-md rounded-xl duration-300 sm:hover:scale-105 cursor-pointer "
-      key={props.url}
       onClick={() => {
         setSelected({
           ...props,
