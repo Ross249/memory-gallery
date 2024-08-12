@@ -6,15 +6,17 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
   const [, setOpen] = useAtom(openView);
   const [, setSelected] = useAtom(selectPhoto);
 
+  const handleClick = () => {
+    setSelected({
+      ...props,
+    });
+    setOpen(true);
+  };
+
   return (
     <div
       className="w-84 shadow-md rounded-xl duration-300 sm:hover:scale-105 cursor-pointer "
-      onClick={() => {
-        setSelected({
-          ...props,
-        });
-        setOpen(true);
-      }}
+      onClick={handleClick}
     >
       <img
         // className=" w-84 h-63 aspect-[4/3] object-cover rounded-t-xl lg:rounded-xl duration-300 sm:hover:scale-105 sm:hover:shadow-xl cursor-pointer "

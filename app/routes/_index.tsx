@@ -117,7 +117,7 @@ export default function Index() {
           </Await>
         </Suspense>
       </div>
-      <PhotoViewModel />
+     <PhotoViewModel />
     </div>
   );
 }
