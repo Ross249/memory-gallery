@@ -15,13 +15,13 @@ const PhotoCard: React.FC<PhotoCardProps> = (props) => {
 
   return (
     <div
-      className="w-84 shadow-md rounded-xl duration-300 sm:hover:scale-105 cursor-pointer "
+      className="w-84 shadow-md  duration-300  cursor-pointer "
       role="button"
       onClick={handleClick}
     >
       <img
         // className=" w-84 h-63 aspect-[4/3] object-cover rounded-t-xl lg:rounded-xl duration-300 sm:hover:scale-105 sm:hover:shadow-xl cursor-pointer "
-        className="aspect-[4/3] object-cover rounded-t-xl lg:rounded-xl "
+        className="aspect-[4/3] object-cover rounded-none"
         width={336}
         height={252}
         src={`${props.url}`}
