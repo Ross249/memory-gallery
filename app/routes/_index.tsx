@@ -102,7 +102,7 @@ export default function Index() {
         </div>
       </div>
 
-      <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-4 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 xl:grid-cols-4 justify-items-center justify-center gap-4 mt-8 mb-5">
         <Suspense
           fallback={Array.from(new Array(12)).map((_, i) => (
             <SkeletonCard key={i} />
