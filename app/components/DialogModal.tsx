@@ -42,7 +42,7 @@ const DialogModal = () => {
     );
   }, [selected.customMetadata]);
   return (
-    <dialog id="dislog-modal" className={`modal`}>
+    <dialog id="dislog-modal" className={`modal overflow-hidden`}>
       <div className="absolute">
         <img
           className="max-w-[90vw]  max-h-[calc(95vh-3em)] object-scale-down relative  bg-transparent shadow-2xl"
