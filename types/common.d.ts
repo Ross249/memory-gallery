@@ -26,3 +26,5 @@ export type Metadata = {
   focal_length?: string | number;
   shutter_speed?: string | number;
 };
+
+export type PhotoCardProps = Content & { url: string };
