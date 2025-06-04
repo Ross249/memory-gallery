@@ -139,7 +139,7 @@ const fetcher = async (url: string) => {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST,GET",
     },
-    cache: "force-cache",
+    next: { revalidate: 43200 },
     method: "GET",
   });
 
