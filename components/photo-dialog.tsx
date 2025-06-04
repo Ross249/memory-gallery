@@ -19,18 +19,6 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
-interface Photo {
-  id: number;
-  src: string;
-  title: string;
-  description: string;
-  photographer: string;
-  location: string;
-  dateTaken: string;
-  camera: string;
-  tags: string[];
-}
-
 interface PhotoDialogProps {
   photo: PhotoCardProps | null;
   open: boolean;
