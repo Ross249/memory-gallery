@@ -78,7 +78,7 @@ export default function Home() {
                         <Image
                           src={photo.key}
                           alt={photo.key}
-                          priority={index < 3} // Prioritize first 3 images
+                          priority={index === 0} // Load first image with priority
                           fill
                           className="object-cover lg:hover:scale-105 lg:transition-transform lg:duration-300"
                           quality={60}
