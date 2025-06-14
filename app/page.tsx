@@ -15,8 +15,7 @@ const fetcher = async (url: string) => {
       "Content-type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST,GET",
-      "Content-Security-Policy":
-        "default-src 'self'; img-src 'self' data: https://jimmieluo.com; script-src 'self' *.cloudflareinsights.com;",
+      "Content-Security-Policy": "script-src 'self' *.cloudflareinsights.com;",
     },
     next: { revalidate: 43200 },
     method: "GET",
@@ -68,7 +67,7 @@ export default function Home() {
               ? Array.from({ length: 12 }).map((_, index) => (
                   <PhotoSkeleton key={index} />
                 ))
-              : homePagePhotos.data?.photos.map((photo) => (
+              : homePagePhotos.data?.photos.map((photo, index) => (
                   <Card
                     key={photo.key}
                     className="cursor-pointer overflow-hidden rounded-none  py-0"
@@ -79,7 +78,7 @@ export default function Home() {
                         <Image
                           src={photo.key}
                           alt={photo.key}
-                          priority={true}
+                          priority={index < 3} // Prioritize first 3 images
                           fill
                           className="object-cover lg:hover:scale-105 lg:transition-transform lg:duration-300"
                           quality={60}
