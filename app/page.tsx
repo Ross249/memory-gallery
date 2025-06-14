@@ -15,6 +15,8 @@ const fetcher = async (url: string) => {
       "Content-type": "application/json",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "POST,GET",
+      "Content-Security-Policy":
+        "default-src 'self'; img-src 'self' data: https://jimmieluo.com; script-src 'self' *.cloudflareinsights.com;",
     },
     next: { revalidate: 43200 },
     method: "GET",
