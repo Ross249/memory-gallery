@@ -30,6 +30,11 @@ export const metadata: Metadata = {
     "personal",
     "portfolio",
   ],
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
   openGraph: {
     title: "Jim Luo's Memory",
     description: "Welcome to Jim Luo's Memory",

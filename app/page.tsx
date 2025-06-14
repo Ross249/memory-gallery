@@ -10,19 +10,28 @@ import useSWR from "swr";
 import { PhotoCardProps } from "@/types/common";
 
 const fetcher = async (url: string) => {
-  const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
-    headers: {
-      "Content-type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST,GET",
-    },
-    next: { revalidate: 43200 },
-    method: "GET",
-  });
+  try {
+    const resp = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+      headers: {
+        "Content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "POST,GET",
+      },
+      next: { revalidate: 43200 },
+      method: "GET",
+      signal: AbortSignal.timeout(10000), // 10 second timeout
+    });
 
-  const res = await resp.json();
+    if (!resp.ok) {
+      throw new Error(`HTTP error! status: ${resp.status}`);
+    }
+    const res = await resp.json();
 
-  return res;
+    return res;
+  } catch (error) {
+    console.error("Error fetching photos:", error);
+    throw error;
+  }
 };
 
 export default function Home() {
@@ -33,8 +42,32 @@ export default function Home() {
 
   const homePagePhotos = useSWR<{ photos: PhotoCardProps[]; success: boolean }>(
     "/list_photos",
-    () => fetcher("/list_photos")
+    () => fetcher("/list_photos"),
+    {
+      errorRetryCount: 3,
+      errorRetryInterval: 1000,
+      onError: (error) => {
+        console.error("SWR error:", error);
+      },
+    }
   );
+
+  if (homePagePhotos.error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-4">Something went wrong</h2>
+          <p className="text-muted-foreground mb-4">Failed to load photos</p>
+          <button
+            onClick={() => homePagePhotos.mutate()}
+            className="px-4 py-2 bg-primary text-primary-foreground rounded"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   const handlePhotoClick = (photo: PhotoCardProps) => {
     setSelectedPhoto(photo);
