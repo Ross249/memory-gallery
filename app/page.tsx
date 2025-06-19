@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
-import Image from "next/image";
 import { ThemeToggle } from "../components/theme-toggle";
 import { PhotoDialog } from "../components/photo-dialog";
 import { Card, CardContent } from "@/components/ui/card";

@@ -8,16 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { PhotoCardProps } from "@/types/common";
 
-import {
-  Aperture,
-  Calendar,
-  Camera,
-  MapPin,
-  User,
-  Wand,
-  X,
-} from "lucide-react";
-import Image from "next/image";
+import { Aperture, Calendar, Camera, Wand, X } from "lucide-react";
 
 interface PhotoDialogProps {
   photo: PhotoCardProps | null;
@@ -52,12 +43,18 @@ export function PhotoDialog({ photo, open, onOpenChange }: PhotoDialogProps) {
           className="relative w-full h-full"
           onClick={() => onOpenChange(false)}
         >
-          <Image
+          {/* <Image
             src={photo.key || "/placeholder.svg"}
             alt={photo.key}
             fill
             className="object-contain"
             sizes="100vw"
+          /> */}
+          <img
+            src={photo.key || "/placeholder.svg"}
+            alt={photo.key}
+            className="absolute inset-0 w-full h-full object-contain"
+            loading="eager"
           />
 
           {/* Information overlay in bottom left */}
