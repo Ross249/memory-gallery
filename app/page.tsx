@@ -75,7 +75,7 @@ export default function Home() {
                   >
                     <CardContent className="p-0">
                       <div className="relative aspect-square overflow-hidden">
-                        <Image
+                        {/* <Image
                           src={photo.key}
                           alt={photo.key}
                           priority={index === 0} // Load first image with priority
@@ -83,6 +83,12 @@ export default function Home() {
                           className="object-cover lg:hover:scale-105 lg:transition-transform lg:duration-300"
                           quality={60}
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                        /> */}
+                        <img
+                          src={photo.key}
+                          alt={photo.key}
+                          loading={index === 0 ? "eager" : "lazy"}
+                          className="absolute inset-0 w-full h-full object-cover lg:hover:scale-105 lg:transition-transform lg:duration-300"
                         />
                       </div>
                       <div className="px-4 py-3 w-85 lg:hidden ">
